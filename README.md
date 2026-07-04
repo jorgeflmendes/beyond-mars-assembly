@@ -1,79 +1,120 @@
 # Beyond Mars
 
-Assembly game project for the **Introduction to Computer Architecture** course.
+> A real-time arcade game implemented in assembly with interrupts, concurrent processes, collision handling, audio, and animated media.
 
-This repository contains the game source code, circuit definition, simulator, and media assets required to run the project locally.
+Beyond Mars is a low-level game built for a processor and circuit simulator.
+The player controls a ship, launches probes, avoids asteroid collisions, and
+manages energy while independent interrupt-driven processes update game state
+and audiovisual feedback.
 
 ## Overview
 
-**Beyond Mars** is a real-time arcade-style game implemented in assembly for the course simulator environment.  
-The player controls a ship, launches probes, avoids asteroid collisions, manages energy, and reacts to timed game events such as animated ship lights, asteroid spawning, and game-over states.
+The project turns computer-architecture concepts into a complete interactive
+system. Assembly routines coordinate keypad input, timers, display updates,
+moving entities, collision detection, energy state, animation, sound, and
+game-over transitions through the simulator's memory-mapped interfaces.
 
-## Repository Layout
+It demonstrates low-level state management, interrupt handling, concurrent
+process design, register discipline, memory-mapped I/O, and event-driven game
+logic.
+
+## Academic Context
+
+This project was developed as part of the **Introduction to Computer
+Architecture** course unit at **Instituto Superior Técnico, University of
+Lisbon**.
+
+This project explores low-level programming, assembly, processor architecture
+concepts, memory management, and hardware-oriented reasoning.
+
+## Key Features
+
+- Real-time hexadecimal-keypad input scanning
+- Concurrent processes driven by interrupts
+- Energy management and display updates
+- Multiple asteroid trajectories and collision rules
+- Three player-launched probes
+- Animated ship lighting
+- Integrated backgrounds, overlays, audio, and video events
+- Pause, restart, and game-over state handling
+
+## Architecture
+
+The main assembly program coordinates independent routines for input, timers,
+ship animation, asteroid generation and movement, probes, collision handling,
+energy updates, and media events. Shared state is stored in memory and
+peripheral interaction is performed through the simulator's circuit and media
+interfaces.
+
+## Tech Stack
+
+- Course assembly language and processor simulator
+- Circuit and Media Center configuration
+- Java-based simulator runtime
+- Image, audio, and video assets
+
+## Repository Structure
 
 ```text
 .
-|-- beyond-mars.asm        # Main assembly source file
-|-- beyond-mars.cir        # Circuit and Media Center configuration
-|-- sepe-simulator-1.5-2023.jar # Simulator used to run the project
-`-- media/                 # Images, audio, and video assets used by the game
+|-- beyond-mars.asm             # Game logic and low-level routines
+|-- beyond-mars.cir             # Circuit and Media Center configuration
+`-- sepe-simulator-1.5-2023.jar # Course simulator snapshot
 ```
 
-## Requirements
+The circuit file references the media used for backgrounds, overlays, sounds,
+and video events.
 
-- Java runtime capable of launching `sepe-simulator-1.5-2023.jar`
-- The provided simulator version
+## Getting Started
 
-## Running the Project
+Prerequisite: a Java runtime compatible with the supplied simulator.
 
-1. Open the simulator:
+```bash
+git clone https://github.com/jorgeflmendes/beyond-mars-assembly.git
+cd beyond-mars-assembly
+java -jar sepe-simulator-1.5-2023.jar
+```
 
-   ```powershell
-   java -jar sepe-simulator-1.5-2023.jar
-   ```
+In the simulator:
 
-2. Load the circuit file:
+1. Load `beyond-mars.cir`.
+2. Confirm that the circuit points to `beyond-mars.asm`.
+3. Start the simulation.
 
-   - `beyond-mars.cir`
+Controls:
 
-3. Confirm that the circuit points to:
+| Key | Action |
+| --- | --- |
+| `C` | Start |
+| `F` | Pause or resume |
+| `E` | End game |
+| `0` | Launch left probe |
+| `1` | Launch center probe |
+| `2` | Launch right probe |
 
-   - `beyond-mars.asm`
+## Running Tests
 
-4. Start the simulation from the simulator UI.
+The project is validated interactively in the course simulator. It does not
+currently include an automated test harness or CI workflow because execution
+depends on the simulator, circuit, and media environment.
 
-## Controls
+## Limitations
 
-The game uses the hexadecimal keypad expected by the simulator:
+- Execution is coupled to the supplied course simulator.
+- Hardware behavior and media integration are not portable to a native runtime.
+- Automated headless testing is not currently available.
+- Redistribution rights for the simulator and third-party media have not been
+  independently established.
 
-- `C` - Start game
-- `F` - Pause / resume
-- `E` - End game
-- `0` - Launch left probe
-- `1` - Launch center probe
-- `2` - Launch right probe
+## Roadmap
 
-## Features
+- Add gameplay screenshots or a short recorded demonstration
+- Document the main memory map and process interactions
+- Separate first-party media from simulator-provided resources
+- Add checksums and tested Java runtime information
 
-- Real-time keyboard input scanning
-- Concurrent game processes driven by interrupts
-- Energy management and display updates
-- Animated ship light patterns
-- Multiple asteroid trajectories and types
-- Probe launching and collision handling
-- Integrated Media Center backgrounds, audio, and video events
+## Usage Note
 
-## Media Assets
-
-Media files are named using a consistent convention:
-
-- `background-*` for backgrounds
-- `overlay-*` for overlays
-- `audio-*` for sound assets
-- `video-*` for video assets
-
-All media paths are configured in `beyond-mars.cir`.
-
-## Notes
-
-- The project is designed for the provided simulator and circuit environment.
+No blanket repository license is provided because the simulator and media may
+be subject to separate rights. Review the applicable course and third-party
+terms before redistribution or reuse.
