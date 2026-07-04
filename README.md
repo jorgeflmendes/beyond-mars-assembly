@@ -40,11 +40,32 @@ concepts, memory management, and hardware-oriented reasoning.
 
 ## Architecture
 
-The main assembly program coordinates independent routines for input, timers,
-ship animation, asteroid generation and movement, probes, collision handling,
-energy updates, and media events. Shared state is stored in memory and
-peripheral interaction is performed through the simulator's circuit and media
-interfaces.
+```mermaid
+flowchart LR
+    KEYS["Hex keypad interrupts"] --> INPUT["Input routines"]
+    TIMER["Timer interrupts"] --> TICKS["Process scheduling"]
+    INPUT --> STATE["Shared memory state"]
+    TICKS --> STATE
+
+    STATE --> SHIP["Ship and lights"]
+    STATE --> PROBES["Probe movement"]
+    STATE --> AST["Asteroids"]
+    STATE --> COLLISIONS["Collision rules"]
+    COLLISIONS --> ENERGY["Energy and game state"]
+
+    SHIP --> IO["Memory-mapped I/O"]
+    PROBES --> IO
+    AST --> IO
+    ENERGY --> IO
+    IO --> MEDIA["Circuit and Media Center"]
+```
+
+The main assembly program coordinates interrupt-driven routines through shared
+memory state. Peripheral interaction stays at the simulator boundary through
+memory-mapped circuit and media interfaces.
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the process map, event
+flow, memory-state boundary, and simulator integration.
 
 ## Tech Stack
 
@@ -59,6 +80,7 @@ interfaces.
 .
 |-- beyond-mars.asm             # Game logic and low-level routines
 |-- beyond-mars.cir             # Circuit and Media Center configuration
+|-- docs/                       # Architecture documentation
 `-- sepe-simulator-1.5-2023.jar # Course simulator snapshot
 ```
 
